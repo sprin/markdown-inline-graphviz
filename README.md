@@ -1,8 +1,8 @@
 Markdown Inline Graphviz
 ========================
 
-A Python Markdown extension that replaces inline dot graphs with inline SVGs
-or PNGs!
+A Python Markdown extension that replaces inline Graphviz definitins with
+inline SVGs or PNGs!
 
 Why render the graphs inline? No configuration! Works with any
 Python-Markdown-based static site generator, such as
@@ -36,6 +36,8 @@ To use it in your Markdown doc:
     }
 %}
 ```
+
+Supported graphviz commands: dot, neato, fdp, sfdp, twopi, circo.
 
 # Credits
 

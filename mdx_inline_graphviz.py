@@ -27,8 +27,10 @@ import base64
 
 # Global vars
 BLOCK_RE = re.compile(
-    r'^\{% dot\s+(?P<filename>[^\s]+)\s*\n(?P<content>.*?)%}\s*$',
+    r'^\{% (?P<command>\w+)\s+(?P<filename>[^\s]+)\s*\n(?P<content>.*?)%}\s*$',
     re.MULTILINE | re.DOTALL)
+# Command whitelist
+SUPPORTED_COMMAMDS = ['dot', 'neato', 'fdp', 'sfdp', 'twopi', 'circo']
 
 
 class InlineGraphvizExtension(markdown.Extension):
@@ -37,7 +39,7 @@ class InlineGraphvizExtension(markdown.Extension):
         """ Add InlineGraphvizPreprocessor to the Markdown instance. """
         md.registerExtension(self)
 
-        md.preprocessors.add('dot_block',
+        md.preprocessors.add('graphviz_block',
                              InlineGraphvizPreprocessor(md),
                              "_begin")
 
@@ -54,11 +56,15 @@ class InlineGraphvizPreprocessor(markdown.preprocessors.Preprocessor):
         while 1:
             m = BLOCK_RE.search(text)
             if m:
+                command = m.group('command')
+                # Whitelist command, prevent command injection.
+                if command not in SUPPORTED_COMMAMDS:
+                    raise Exception('Command not supported: %s' % command)
                 filename = m.group('filename')
                 content = m.group('content')
                 filetype = filename[filename.rfind('.')+1:]
 
-                args = ['dot', '-T'+filetype]
+                args = [command, '-T'+filetype]
                 try:
                     proc = subprocess.Popen(
                         args,
