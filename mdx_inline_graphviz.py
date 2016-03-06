@@ -71,14 +71,14 @@ class InlineGraphvizPreprocessor(markdown.preprocessors.Preprocessor):
                         stdin=subprocess.PIPE,
                         stderr=subprocess.PIPE,
                         stdout=subprocess.PIPE)
-                    proc.stdin.write(content)
+                    proc.stdin.write(content.encode('utf-8'))
 
                     output, err = proc.communicate()
 
                     if filetype == 'svg':
                         data_url_filetype = 'svg+xml'
                         encoding = 'utf-8'
-                        img = output
+                        img = output.decode(encoding)
 
                     if filetype == 'png':
                         data_url_filetype = 'png'
