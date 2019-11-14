@@ -1,10 +1,10 @@
-Markdown Inline Graphviz
-========================
+Markdown Inline Graphviz/mscgen
+===============================
 
-A Python Markdown extension that replaces inline Graphviz definitins with
+A Python Markdown extension that replaces inline Graphviz and mscgen definitions with
 inline SVGs or PNGs!
 
-Why render the graphs inline? No configuration! Works with any
+Why render the graphs/msc inline? No configuration! Works with any
 Python-Markdown-based static site generator, such as
 [MkDocs](http://www.mkdocs.org/), [Pelican](http://blog.getpelican.com/), and
 [Nikola](https://getnikola.com/) out of the box without configuring an output
@@ -37,7 +37,7 @@ To use it in your Markdown doc:
 %}
 ```
 
-Supported graphviz commands: dot, neato, fdp, sfdp, twopi, circo.
+Supported graphviz/mscgen commands: mscgen, dot, neato, fdp, sfdp, twopi, circo.
 
 # Credits
 

@@ -30,7 +30,7 @@ BLOCK_RE = re.compile(
     r'^\{% (?P<command>\w+)\s+(?P<filename>[^\s]+)\s*\n(?P<content>.*?)%}\s*$',
     re.MULTILINE | re.DOTALL)
 # Command whitelist
-SUPPORTED_COMMAMDS = ['dot', 'neato', 'fdp', 'sfdp', 'twopi', 'circo']
+SUPPORTED_COMMAMDS = ['mscgen', 'dot', 'neato', 'fdp', 'sfdp', 'twopi', 'circo']
 
 
 class InlineGraphvizExtension(markdown.Extension):
@@ -65,6 +65,8 @@ class InlineGraphvizPreprocessor(markdown.preprocessors.Preprocessor):
                 filetype = filename[filename.rfind('.')+1:]
 
                 args = [command, '-T'+filetype]
+                if command == 'mscgen':
+                    args += ['-o', '-']
                 try:
                     proc = subprocess.Popen(
                         args,
@@ -79,11 +81,13 @@ class InlineGraphvizPreprocessor(markdown.preprocessors.Preprocessor):
                         data_url_filetype = 'svg+xml'
                         encoding = 'utf-8'
                         img = output.decode(encoding)
+                        if command == 'mscgen':
+                            img = img.replace('\n', '')
 
                     if filetype == 'png':
                         data_url_filetype = 'png'
                         encoding = 'base64'
-                        output = base64.b64encode(output)
+                        output = base64.b64encode(output).decode('utf-8')
                         data_path = "data:image/%s;%s,%s" % (
                             data_url_filetype,
                             encoding,
