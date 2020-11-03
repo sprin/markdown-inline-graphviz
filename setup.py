@@ -19,7 +19,7 @@ if sys.argv[-1] == 'publish':
     sys.exit()
 
 setup(
-    name="Markdown Inline Graphviz Extension",
+    name="markdown-inline-graphviz-extension",
     version=VERSION,
     py_modules=["mdx_inline_graphviz"],
     install_requires=['Markdown>=2.3.1'],
