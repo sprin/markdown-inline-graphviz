@@ -1,7 +1,7 @@
 Markdown Inline Graphviz
 ========================
 
-A Python Markdown extension that replaces inline Graphviz definitins with
+A Python Markdown extension that replaces inline Graphviz definitions with
 inline SVGs or PNGs!
 
 Why render the graphs inline? No configuration! Works with any
